@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using SmallStore.Application.Services;
+using SmallStore.Core.Abstractions;
 using SmallStoreCA.DataAccess;
+using SmallStoreCA.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,9 @@ builder.Services.AddDbContext<StoreDbContext>(
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(StoreDbContext)));
     });
+
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 
 var app = builder.Build();
 
